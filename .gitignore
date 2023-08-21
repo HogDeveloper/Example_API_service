@@ -1,0 +1,5 @@
+database/
+database/mysql/*
+docker/nginx/logs/*
+.env
+.ide
