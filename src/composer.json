@@ -1,0 +1,19 @@
+{
+    "name": "m2e/service_name",
+    "license": "",
+    "authors": [
+        {
+            "name": "Mikhail Malezhyk",
+            "email": "m.malezhyk@gmail.com"
+        }
+    ],
+    "require": {
+        "league/csv": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "vendor/",
+            "App\\":  "app/"
+        }
+    }
+}

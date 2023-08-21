@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+    use App\engine\Cli;
+
+    require_once __DIR__  . "/vendor/autoload.php";
+    
+    $cli = new Cli($argv, __DIR__ . "/app/configs/bootstrap.php", __DIR__);
+    $cli->exec();
+
+    exit();

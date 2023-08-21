@@ -1,0 +1,64 @@
+version: "3.3"
+services:
+
+  nginx:
+    build: 
+      context: .
+      args:
+        - NGINX_VERSION=${NGINX_VERSION}
+      dockerfile: ./docker/nginx/nginx.Dockerfile
+    env_file:
+      - .env
+    container_name: ${NGINX_CONTAINER_NAME}
+    ports:
+      - ${NGINX_PORT_HTTP}:80
+    links:
+      - php-fpm
+    volumes:
+      - ./src:/var/www/service_name
+      - ./docker/nginx/logs:/var/log/nginx
+
+  php-fpm:
+    build:
+      context: .
+      args:
+        - FPM_VERSION=${FPM_VERSION}
+      dockerfile: ./docker/php/fpm.Dockerfile
+    env_file:
+      - .env
+    container_name: ${FPM_CONTAINER_NAME}
+    volumes:
+      - ./src:/var/www/service_name
+    links:
+      - mysql
+    mem_limit: 1024m
+
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    container_name: ${MYSQL_CONTAINER_NAME}
+    env_file:
+      - ./.env
+    ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - ./database/mysql/mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_INITDB_SKIP_TZINFO=${MYSQL_INITDB_SKIP_TZINFO}
+      - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    command: |
+      --character-set-server=utf8 
+      --collation-server=utf8_general_ci
+
+  phpmyadmin:
+    image: phpmyadmin:${PHPMYADMIN_VERSION}
+    container_name: ${PHPMYADMIN_CONTAINER_NAME}
+    env_file:
+      - ./.env
+    ports:
+      - ${PHPMYADMIN_PORT}:80
+    environment:
+      - PMA_ARBITRARY=1
