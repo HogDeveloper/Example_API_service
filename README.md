@@ -13,7 +13,7 @@
 
 ###### What you need to know?
 
-The following `bash` scripts are available to you: `build.sh` - runs the Docker build, `startup.sh` - runs project configuration commands, and `clear_logs.sh` - clears log files
+The following `bash` scripts are available to you: `build.sh` - runs the Docker build
 
 The `orders` table has the following set of fields: `id`, `purchase_date`, `customer_name`, `customer_email`, `grant_total`, `status`
 
